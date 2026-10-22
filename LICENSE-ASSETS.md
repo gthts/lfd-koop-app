@@ -18,6 +18,16 @@ appropriate credit, provide a link to the licence and indicate if changes were m
   and interface texts (`app/src/main/assets/www/i18n.js`) in German, English and Korean
 - The screenshots in `screenshots/`
 
+## AI-generated material
+
+- The **landscape motifs** (the painted backgrounds of the event cards and the pictures of the three goals) were
+  **generated with an AI image tool**. Whether and to what extent such images are protected by copyright depends on
+  the jurisdiction, and the terms of the tool used apply in addition. For these images the CC BY 4.0 licence is
+  granted **only to the extent that rights exist** in them; no warranty is given about their copyright status.
+- The symbols, seals, round trackers, reference card and layout elements are drawn as vector graphics, and the
+  program code, texts and translations were produced with the help of an AI assistant (Claude by Anthropic), under
+  the direction and review of the author.
+
 ## Suggested credit
 
 “LFD Koop by github_ts@online.de, licensed under CC BY 4.0” with a link to this repository.

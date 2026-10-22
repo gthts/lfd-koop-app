@@ -18,7 +18,7 @@ The app replaces that event deck. You keep playing **with the components on the 
 - **Four round trackers** (Training, Standard, Hardcore and the Short game for Protective Thicket) set the intensity, the start of the partner forest and the end of the game.
 - **47-card event deck**, drawn by touch. Cards of the same category may not lie in the display together (“uh-oh”, the new card goes to the discard pile); the Onibi seal at the top left of each card shows its category.
 - **Complete rules and glossary** inside the app, searchable, covering every difference from the base game (no player order, revealing together, Sanki, partner forest, bonus actions, …).
-- **Entirely original artwork:** event cards, round trackers, reference card and goal pictures.
+- **Entirely original artwork:** event cards, round trackers, reference card and goal pictures (the painted landscape motifs are AI-generated, see [LICENSE-ASSETS.md](LICENSE-ASSETS.md)).
 - **Localised in German, English and Korean** (interface, cards, rules, glossary).
 - Works **offline and without a server**: plain HTML, CSS and JavaScript without libraries, shown in a WebView on Android and straight from the files in a desktop browser.
 
