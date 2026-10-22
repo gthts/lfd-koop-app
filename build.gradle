@@ -1,0 +1,12 @@
+// Nur lokal vorhandene Versionen verwenden (Bau ohne Downloads aus dem Zwischenspeicher von Android Studio)
+buildscript {
+    configurations.classpath {
+        resolutionStrategy {
+            force 'org.jetbrains.kotlin:kotlin-reflect:2.3.21', 'org.jetbrains:annotations:13.0'
+        }
+    }
+}
+
+plugins {
+    id 'com.android.application' version '9.4.1' apply false
+}

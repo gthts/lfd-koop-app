@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'de.torsi.lfdcoop'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'de.torsi.lfdcoop'
+        minSdk 26
+        targetSdk 37
+        versionCode 9
+        versionName '1.4.2'
+    }
+
+    // Signierschlüssel für die Release-APK: nicht im Projekt ablegen, sondern über Gradle-Eigenschaften übergeben
+    // (z. B. in %GRADLE_USER_HOME%\gradle.properties oder mit -P...): LFD_KEYSTORE, LFD_KEYSTORE_PASSWORD, LFD_KEY_ALIAS, LFD_KEY_PASSWORD
+    signingConfigs {
+        release {
+            if (project.hasProperty('LFD_KEYSTORE')) {
+                storeFile file(project.property('LFD_KEYSTORE'))
+                storePassword project.property('LFD_KEYSTORE_PASSWORD')
+                keyAlias project.property('LFD_KEY_ALIAS')
+                keyPassword project.property('LFD_KEY_PASSWORD')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            if (project.hasProperty('LFD_KEYSTORE')) {
+                signingConfig signingConfigs.release
+            }
+        }
+    }
+
+    // Die Lint-Werkzeuge liegen im lokalen Zwischenspeicher nicht vor (Bau ohne Downloads)
+    lint {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}

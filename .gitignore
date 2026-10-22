@@ -1,0 +1,15 @@
+# Bauergebnisse und lokale Dateien
+build/
+app/build/
+.gradle/
+.bauen/
+local.properties
+*.apk
+.idea/
+*.iml
+
+# Schlüssel und Kennwörter niemals einchecken
+schluessel/
+*.jks
+*.keystore
+signierdaten.properties
