@@ -8,7 +8,7 @@ The whole app lives in `app/src/main/assets/www/`. To look at it, open `index.ht
 
 With Android Studio: open the folder and choose “Build → Generate Signed App Bundle / APK”. Requirements: Android Gradle Plugin 9.4.1, Gradle 9.6.0, platform 37 (`compileSdk` and `targetSdk` 37, `minSdk` 26), JDK 17 or newer.
 
-With the script (Windows, PowerShell): `bauen_android.ps1` builds the debug or release version. It expects the tools under `C:\Development` (`Android\Sdk`, `Gradle`) and the JDK of Android Studio; the paths are at the top of the script and can be adapted.
+With the script (Windows, PowerShell): `bauen_android.ps1` builds the debug or release version. It expects the tools under `C:\Development` (`Android\Sdk`, `Gradle`) and the JDK of Android Studio; both can be changed with the parameters `-Tools` and `-Jdk`.
 
 ```powershell
 powershell -File bauen_android.ps1 assembleDebug
