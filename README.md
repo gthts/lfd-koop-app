@@ -42,4 +42,10 @@ The app replaces that event deck. You keep playing **with the components on the 
 
 ## Status
 
-Version **1.4.2**. Licence: not yet defined (all rights reserved). The repository is private for now.
+Version **1.4.2**. The repository is private for now.
+
+## License
+
+- **Program code:** [MIT](LICENSE)
+- **Artwork and texts** (images, rules, glossary, interface and card texts, screenshots): [CC BY 4.0](LICENSE-ASSETS.md), please credit “LFD Koop by github_ts@online.de”
+- *Living Forest Duel* and its trademarks, artwork and rules text belong to their owners and are not covered; see the notice at the top.
