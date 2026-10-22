@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0b1a17">
+<title>Living Forest Duel – Kooperativ</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="bg"></div>
+<div id="flies"></div>
+
+<!-- 0. Sprache -->
+<section id="screenLang" class="screen">
+  <header class="head">
+    <div class="kicker">Living Forest Duel</div>
+    <h1>Co-op</h1>
+    <p class="lead" data-i="langTitle"></p>
+  </header>
+  <div id="langRow" class="langrow"></div>
+</section>
+
+<!-- 1. Spielziel -->
+<section id="screenGoal" class="screen">
+  <div class="topright"><div class="helpbar"></div><button id="langBtn" class="ibtn" type="button"></button></div>
+  <header class="head">
+    <div class="kicker">Living Forest Duel</div>
+    <h1 data-i="h1"></h1>
+    <p class="fan" data-i="fanNote"></p>
+    <p class="lead" data-i="chooseGoal"></p>
+  </header>
+  <div id="goalRow" class="goalrow"></div>
+</section>
+
+<!-- 2. Rundentracker -->
+<section id="screenTracker" class="screen">
+  <div class="topright"><div class="helpbar"></div></div>
+  <header class="head small">
+    <button id="backToGoal" class="btn ghost back" data-i="back"></button>
+    <div>
+      <div class="kicker" id="trackerGoalName"></div>
+      <h1 data-i="chooseTracker"></h1>
+    </div>
+  </header>
+  <div id="trackerRow" class="trackerrow"></div>
+</section>
+
+<!-- 3. Spiel -->
+<section id="screenGame" class="screen">
+  <div id="stage">
+    <div id="trackerBox" class="trackerbox">
+      <div id="tflip" class="tflip">
+        <div class="tface">
+          <img id="trackerImg" alt="" draggable="false">
+          <div id="marker" class="marker"><i></i></div>
+        </div>
+        <div class="tface rev">
+          <img id="refImg" src="img/referenzkarte.webp" alt="" draggable="false">
+        </div>
+      </div>
+    </div>
+
+    <div id="infoPanel" class="panel info">
+      <div class="goalname" id="infoGoal"></div>
+      <div class="trackername" id="infoTracker"></div>
+      <div class="hint" id="infoHint"></div>
+      <div class="helpbar"></div>
+      <button id="restartBtn" class="btn ghost wide"></button>
+    </div>
+
+    <div id="msg" class="msg"></div>
+    <div id="center" class="panel center">
+      <div class="roundlbl" id="roundLbl"></div>
+      <div class="roundnum"><b id="roundNum">1</b><span id="roundOf">/ 16</span></div>
+      <div id="pips" class="pips"></div>
+      <div id="lastBanner" class="lastbanner"></div>
+      <button id="nextBtn" class="btn big" disabled></button>
+    </div>
+
+    <div id="deckSlot" class="slotframe"></div>
+    <div id="discardSlot" class="slotframe"></div>
+    <div id="deckPile" class="pile"></div>
+    <div id="discardPile" class="pile"></div>
+    <div id="deckLbl" class="pilelbl"></div>
+    <div id="discardLbl" class="pilelbl"></div>
+    <div id="slotLayer"></div>
+    <div id="dropHint" class="drophint"></div>
+    <div id="cardLayer"></div>
+  </div>
+</section>
+
+<!-- Anleitung (Symbol „Anleitung“) -->
+<div id="manual" class="sheet from-right">
+  <div class="sheet-bar"><span id="manualTitle" class="sheet-title"></span><input id="manualSearch" class="search" type="text" autocomplete="off"><span id="manualCount" class="count"></span><button id="manualPrev" class="nav" type="button" aria-label="↑">▲</button><button id="manualNext" class="nav" type="button" aria-label="↓">▼</button><button id="manualX" class="x" aria-label="×">✕</button></div>
+  <div id="manualBody" class="sheet-body"></div>
+</div>
+
+<!-- Glossar (Symbol „Glossar“) -->
+<div id="glossary" class="sheet from-left">
+  <div class="sheet-bar"><span id="glossTitle" class="sheet-title"></span><input id="glossSearch" class="search" type="text" autocomplete="off"><span id="glossCount" class="count"></span><button id="glossPrev" class="nav" type="button" aria-label="↑">▲</button><button id="glossNext" class="nav" type="button" aria-label="↓">▼</button><button id="glossX" class="x" aria-label="×">✕</button></div>
+  <div id="glossBody" class="sheet-body"></div>
+</div>
+
+<!-- Rückfrage Neustart -->
+<div id="modal" class="modal">
+  <div class="dialog">
+    <h2 id="mTitle"></h2>
+    <p id="mText"></p>
+    <div class="dlgbtns">
+      <button id="modalNo" class="btn ghost"></button>
+      <button id="modalYes" class="btn"></button>
+    </div>
+  </div>
+</div>
+
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="anleitung.js"></script>
+<script src="glossar.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
