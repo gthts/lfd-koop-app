@@ -1,4 +1,4 @@
-package de.torsi.lfdcoop;
+package de.gthts.lfdcoop;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

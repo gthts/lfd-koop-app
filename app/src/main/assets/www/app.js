@@ -35,11 +35,14 @@ function mischen(arr) {
   }
   return arr;
 }
-function baueStapel() {
+function baueStapel(ziel) {
   const karten = [];
   let id = 0;
+  /* Beim Ewigen Einsiedler fehlen Baumfäule und Wurzelwanderung (34 Karten). */
+  const ohne = ziel && ziel.id === 'einsiedler' ? ['faeule', 'wurzel'] : [];
   for (const [bild, art, p, anzahl] of STAPEL_DEF)
-    for (let i = 0; i < anzahl; i++) karten.push({ id: id++, bild, art, p });
+    if (!ohne.includes(art))
+      for (let i = 0; i < anzahl; i++) karten.push({ id: id++, bild, art, p });
   return mischen(karten);
 }
 function intensitaet(runde) {
@@ -197,7 +200,7 @@ function starteSpiel(ziel, trackerId, ende, gruppe) {
   S = {
     ziel, tracker: t, gruppe,
     runde: 1,
-    stapel: baueStapel(),
+    stapel: baueStapel(ziel),
     ablage: [],
     auslage: [null, null, null],
     anzeigeSlots: 0,
@@ -207,10 +210,11 @@ function starteSpiel(ziel, trackerId, ende, gruppe) {
   $('#cardLayer').innerHTML = '';
   $('#slotLayer').innerHTML = '';
   $('#tflip').classList.remove('back');
+  $('#tflip').style.setProperty('--tw', '0deg');
   $('#trackerImg').src = IMG + t.bild + '.webp';
   $('#infoGoal').textContent = tr('goal_' + ziel.id);
   $('#infoTracker').textContent = tr('trackerName', t.id, t.name);
-  $('#infoHint').textContent = tr('infoHint', ende, t.partner) + ' ' + tr('twoThree', t.zwei, t.drei) + '.' + (t.einWald ? ' ' + tr('oneForest') : '');
+  $('#infoHint').textContent = tr('infoHint', ende, t.partner) + ' ' + tr('twoThree', t.zwei, t.drei) + '.' + (t.einWald ? ' ' + tr('oneForest') : '') + ' ' + (t.fluch ? tr('curseFrom', t.fluch) : tr('noCurse')) + (ziel.id === 'einsiedler' ? ' ' + tr('dropTrees') : '');
   $('#roundOf').textContent = '/ ' + ende;
   $('#lastBanner').classList.remove('show');
   $('#msg').className = 'msg';
@@ -615,10 +619,17 @@ function markerSetzen(runde, animiert) {
 }
 
 /* ---------- Trackerkarte wenden (Wischen) ---------- */
-function trackerWenden(hinten) {
+/* Die Karte dreht sich in Wischrichtung: nach rechts positiv, nach links negativ (Winkel in Vielfachen von 180°). */
+function trackerWenden(hinten, richtung) {
   if (!S) return;
-  S.trackerHinten = (hinten === undefined) ? !S.trackerHinten : hinten;
-  $('#tflip').classList.toggle('back', S.trackerHinten);
+  const neu = (hinten === undefined) ? !S.trackerHinten : hinten;
+  if (neu === S.trackerHinten) return;
+  const t = $('#tflip');
+  const w = parseFloat(t.style.getPropertyValue('--tw')) || 0;
+  const ziel = richtung ? w + 180 * richtung : (neu ? w + 180 : w - 180 * Math.sign(w));
+  S.trackerHinten = neu;
+  t.style.setProperty('--tw', ziel + 'deg');
+  t.classList.toggle('back', S.trackerHinten);
 }
 function bindeTrackerWischen() {
   const box = $('#trackerBox');
@@ -628,7 +639,7 @@ function bindeTrackerWischen() {
     if (!start) return;
     const dx = e.clientX - start.x, dy = e.clientY - start.y;
     start = null;
-    if (Math.abs(dx) > 40 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) trackerWenden();
+    if (Math.abs(dx) > 40 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) trackerWenden(undefined, dx > 0 ? 1 : -1);
   };
   box.addEventListener('pointerup', ende);
   box.addEventListener('pointercancel', () => { start = null; });
@@ -642,9 +653,11 @@ function kartePassendSchreiben(c) {
   dt.style.fontSize = fs + 'px';
   while (dt.scrollHeight > dt.clientHeight + 1 && fs > min) { fs -= 0.5; dt.style.fontSize = fs + 'px'; }
 }
-function karteWenden(c) {
+function karteWenden(c, richtung) {
   if (c._wendet) return;
   c._wendet = true;
+  c._winkel = (c._winkel === undefined ? 180 : c._winkel) + 180 * (richtung || 1);
+  c.style.setProperty('--w', c._winkel + 'deg');
   const zu = c.classList.contains('dm');
   if (!zu) {
     c.classList.add('dm', 'desc');
@@ -669,7 +682,7 @@ function bindeKartenWischen() {
     if (c.classList.contains('dragging') || !S || !S.auslage.includes(c._karte)) return;
     if (!c.classList.contains('flipped')) return;
     const dx = e.clientX - s.x, dy = e.clientY - s.y;
-    if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) karteWenden(c);
+    if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) karteWenden(c, dx > 0 ? 1 : -1);
   });
   layer.addEventListener('pointercancel', () => { start = null; });
 }

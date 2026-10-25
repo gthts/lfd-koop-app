@@ -4,17 +4,21 @@
 
 > **Unofficial fan expansion.** This project is not made by, and not affiliated with, the publisher of Living Forest Duel (Ludonaute). All artwork in the app is original; no artwork from the game is used. All trademarks and game names belong to their respective owners.
 
-![Choosing a goal](screenshots/01-spielziel-de.png)
+![Choosing a goal](screenshots/01-spielziel-en.png)
 
 ## What is this?
 
 *Living Forest Duel* is actually a **competitive two-player game**: Summer and Winter play against each other. This project turns it into a **cooperative variant**: both players are on the same side and fight the Onibi together, whose behaviour is steered by a deck of event cards.
 
+> **You need the base game.** This app is not a game of its own and contains none of the game's components. You play with the real components of *Living Forest Duel* on the table, and the app only takes over the Onibi's event deck. So you really have to **own the base game** (if you do not own it yet, buy it first; it is a wonderful game and worth having anyway).
+
 The app replaces that event deck. You keep playing **with the components on the table**; the app shuffles and draws the 47 event cards, shows the round tracker and keeps track of the display, the discard pile and reshuffling.
+
+**Why play it cooperatively?** The cooperative variant opens up new ways to experience the game and its interesting mechanics all over again. Together you solve the puzzle in every single turn and plan the optimal combo. And sometimes you simply have to shrug off bad luck, together.
 
 ## Key features
 
-- **Cooperative play against the Onibi** with three goals: Eternal Harmony, Protective Thicket, Unyielding to the End.
+- **Cooperative play against the Onibi** with three goals: Complete Harmony, Protective Thicket, Eternal Hermit.
 - **Four round trackers** (Training, Standard, Hardcore and the Short game for Protective Thicket) set the intensity, the start of the partner forest and the end of the game.
 - **47-card event deck**, drawn by touch. Cards of the same category may not lie in the display together (“uh-oh”, the new card goes to the discard pile); the Onibi seal at the top left of each card shows its category.
 - **Complete rules and glossary** inside the app, searchable, covering every difference from the base game (no player order, revealing together, Sanki, partner forest, bonus actions, …).
@@ -42,7 +46,7 @@ The app replaces that event deck. You keep playing **with the components on the 
 
 ## Status
 
-Version **1.4.2**. The repository is private for now.
+Version **1.8.0**. The repository is private for now.
 
 ## License
 

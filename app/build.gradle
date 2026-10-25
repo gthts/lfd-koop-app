@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace 'de.torsi.lfdcoop'
+    namespace 'de.gthts.lfdcoop'
     compileSdk 37
 
     defaultConfig {
-        applicationId 'de.torsi.lfdcoop'
+        applicationId 'de.gthts.lfdcoop'
         minSdk 26
         targetSdk 37
-        versionCode 9
-        versionName '1.4.2'
+        versionCode 21
+        versionName '1.8.0'
     }
 
     // Signierschlüssel für die Release-APK: nicht im Projekt ablegen, sondern über Gradle-Eigenschaften übergeben
