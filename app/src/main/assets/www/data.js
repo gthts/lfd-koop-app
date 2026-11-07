@@ -62,7 +62,7 @@ const SPALTEN9 = [165, 315, 465];
 const TRACKER = {
   '1': { bild: 'rundentracker_1', name: 'training',  ende: 12, zwei: 5,  drei: 9,  partner: 1, fluch: 0, spalten: SPALTEN3, zeilen: ZEILEN3 },
   '2': { bild: 'rundentracker_2', name: 'standard',  ende: 9,  zwei: 3,  drei: 7,  partner: 5, fluch: 4, spalten: SPALTEN9, zeilen: ZEILEN3 },
-  '3': { bild: 'rundentracker_3', name: 'hardcore',  ende: 9,  zwei: 2,  drei: 5,  partner: 6, fluch: 4, spalten: SPALTEN9, zeilen: ZEILEN3 },
+  '3': { bild: 'rundentracker_3', name: 'hardcore',  ende: 9,  zwei: 2,  drei: 5,  partner: 6, fluch: 3, spalten: SPALTEN9, zeilen: ZEILEN3 },
   '4': { bild: 'rundentracker_4', name: 'kurzspiel', ende: 6,  zwei: 2,  drei: 4,  partner: 5, fluch: 3, spalten: [160, 313, 466], zeilen: [319, 585], einWald: true }
 };
 

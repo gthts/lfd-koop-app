@@ -201,6 +201,18 @@ h1{margin:calc(var(--u)*4) 0 0;font-family:Georgia,"Times New Roman",serif;font-
 .shuffle{animation:shuf .22s ease-in-out 3}
 @keyframes shuf{0%,100%{transform:translateX(0) rotate(0)}30%{transform:translateX(calc(var(--u)*-26)) rotate(-4deg)}70%{transform:translateX(calc(var(--u)*26)) rotate(4deg)}}
 
+/* Vergrößerte Karte */
+.zoom{position:fixed;inset:0;z-index:150;display:none;place-items:center;background:rgba(3,10,8,.9);touch-action:manipulation}
+.zoom.show{display:grid}
+.zoombox{position:relative;border-radius:calc(var(--u)*20);filter:drop-shadow(0 calc(var(--u)*14) calc(var(--u)*30) rgba(0,0,0,.8))}
+.zoombox img{width:100%;height:100%;display:block}
+.zoombox.desc{background:url(img/leerkarte.webp) center/100% 100% no-repeat}
+.zoombox.desc .dt{display:block;position:absolute;left:10%;right:10%;top:9%;bottom:12%;overflow:hidden;color:#3a2410;text-align:left;line-height:1.28}
+
+/* Schriftgröße der Systemeinstellung: nur Lesetext (Anleitung, Glossar) und Dialog, begrenzt (siehe setzeSchrift) */
+.sheet-body{--u:var(--us)}
+.dialog{--u:var(--ud)}
+
 /* Dialog */
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(3,10,8,.72);backdrop-filter:blur(3px)}
 .modal.show{display:grid}

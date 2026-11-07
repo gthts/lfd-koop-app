@@ -105,7 +105,7 @@ const L = {
     goal_harmonie: 'Complete Harmony',
     goal_dickicht: 'Protective Thicket',
     goal_einsiedler: 'Eternal Hermit',
-    goaltext_harmonie: 'Recruit all the animals of the forest.',
+    goaltext_harmonie: 'Lure all the animals of the forest.',
     goaltext_dickicht: 'Grow a 3×3 forest in each of the two forests before time runs out.',
     goaltext_einsiedler: 'Hold out until the last round of the tracker has been played to the end. At the end of each round all trees are discarded from the forests.',
     grp_empf: 'Recommended', grp_leicht: 'Easy', grp_schwer: 'Hard', grp_kurz: 'Short game',

@@ -23,9 +23,6 @@ The version is set in `app/build.gradle` (`versionName`, `versionCode`).
 
 The app needs no server, so it can be published as a static web page. The web version is served from the branch `gh-pages` (a plain copy of `app/src/main/assets/www`); `tools/publish_web.ps1` updates that branch from `main`.
 
-**Please note:**
-
-- GitHub Pages is **not available for private repositories on the free plan**. The link `https://<user>.github.io/<repository>/` works once the repository is public (or the account has a plan that includes Pages for private repositories).
-- A GitHub Pages site is publicly reachable even if the repository is private, except with GitHub Enterprise Cloud access control.
+The live version is at <https://gthts.github.io/lfd-koop-app/>. GitHub Pages is not available for private repositories on the free plan; it works because this repository is public.
 
 To switch it on: repository *Settings → Pages → Build and deployment*, source “Deploy from a branch”, branch `gh-pages`, folder `/ (root)`.

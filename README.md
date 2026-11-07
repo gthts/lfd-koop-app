@@ -1,6 +1,10 @@
 # LFD Koop – companion app for a cooperative variant of Living Forest Duel
 
-**Download the Android app:** [Releases](../../releases) · **Desktop browser:** open `app/src/main/assets/www/index.html` from a download of this repository (a hosted web link will follow once the repository is public).
+## 👉 [**Try it live in your browser!**](https://gthts.github.io/lfd-koop-app/)
+
+No installation needed: the full app runs right here in your browser, on a PC, tablet or phone (best in landscape, about 1280 × 800 pixels).
+
+**Download the Android app:** [Releases](../../releases)
 
 > **Unofficial fan expansion.** This project is not made by, and not affiliated with, the publisher of Living Forest Duel (Ludonaute). All artwork in the app is original; no artwork from the game is used. All trademarks and game names belong to their respective owners.
 
@@ -35,7 +39,7 @@ The app replaces that event deck. You keep playing **with the components on the 
 ## Install and try
 
 - **Android tablet (recommended, landscape):** download the signed APK from [Releases](../../releases), copy it to the device and open it (allow installation from unknown sources). Requires Android 8.0 or newer.
-- **Desktop browser:** open `app/src/main/assets/www/index.html` from a download of this repository (a double-click is enough; about 1280 × 800 pixels looks best). A hosted web version will be available once the repository is public, see [docs/BUILD.md](docs/BUILD.md#web-version-github-pages).
+- **In your browser:** [Try it live](https://gthts.github.io/lfd-koop-app/) (no installation; the web version is hosted on GitHub Pages, see [docs/BUILD.md](docs/BUILD.md#web-version-github-pages)). Or open `app/src/main/assets/www/index.html` from a download of this repository (a double-click is enough).
 
 ## Layout
 
@@ -46,7 +50,7 @@ The app replaces that event deck. You keep playing **with the components on the 
 
 ## Status
 
-Version **1.8.0**. The repository is private for now.
+Version **1.8.5**.
 
 ## License
 

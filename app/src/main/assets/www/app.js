@@ -17,6 +17,7 @@ const CARD_RATIO = 630 / 880;
 /* ====================== Zustand ====================== */
 let S = null;       // Spielstand
 let G = null;       // Geometrie der Spielfläche
+let schriftFaktor = 1;   // Schriftgröße der Systemeinstellung (1 = normal)
 let busy = false;   // eine Animation oder ein Zug läuft
 let audioCtx = null;
 let aktuellesZiel = null;   // für die Trackerwahl
@@ -238,12 +239,21 @@ function starteSpiel(ziel, trackerId, ende, gruppe) {
   }, 60);
 }
 
+/* Wird von der Android-Hülle mit der Schriftgröße der Systemeinstellung aufgerufen */
+window.setzeSchrift = function (f) {
+  schriftFaktor = Math.max(1, Math.min(Number(f) || 1, 3));
+  setzeMass();
+};
+
 /* ====================== Geometrie ====================== */
 function setzeMass() {
   const hoch = hochformat();
   const u = hoch ? Math.min(innerWidth / 800, innerHeight / 1280)
                  : Math.min(innerWidth / 1280, innerHeight / 800);
   document.documentElement.style.setProperty('--u', u + 'px');
+  // Lesetext darf mit der Systemschrift wachsen, aber nur so weit, dass das Blatt lesbar bleibt (höchstens 1,6-fach; Dialog 1,25-fach)
+  document.documentElement.style.setProperty('--us', u * Math.min(schriftFaktor, 1.6) + 'px');
+  document.documentElement.style.setProperty('--ud', u * Math.min(schriftFaktor, 1.25) + 'px');
   document.body.classList.toggle('portrait', hoch);
   return u;
 }
@@ -508,18 +518,12 @@ async function legeAus(karte, c, platz) {
   // gleiche Kategorie wie eine bereits ausliegende Karte?
   const andere = S.auslage.map((k, i) => (k && i !== platz) ? k : null).filter(Boolean);
   const klaue = andere.find(k => kategorie(k.art) === kategorie(karte.art));
-  if (klaue && gibtAlternative(andere)) {
+  if (klaue) {
     await ohOh(karte, klaue, platz);
   }
   await sichereStapel();
   busy = false;
   aktualisiere();
-}
-
-/* Gibt es noch irgendeine Karte anderer Kategorie (Stapel oder Ablage)? Sonst gilt die gezogene Karte (Regelwerk, Intensität). */
-function gibtAlternative(andere) {
-  const arten = new Set(andere.map(k => kategorie(k.art)));
-  return S.stapel.some(k => !arten.has(kategorie(k.art))) || S.ablage.some(k => !arten.has(kategorie(k.art)));
 }
 
 async function ohOh(karte, klaue, platz) {
@@ -685,6 +689,77 @@ function bindeKartenWischen() {
     if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) karteWenden(c, dx > 0 ? 1 : -1);
   });
   layer.addEventListener('pointercancel', () => { start = null; });
+}
+
+/* ---------- Doppeltippen vergrößert Tracker, Ereigniskarte oder oberste Ablagekarte; erneut Doppeltippen schließt ---------- */
+function zoomOffen() { return $('#zoom').classList.contains('show'); }
+function zoomSchliessen() { $('#zoom').classList.remove('show'); $('#zoomBox').innerHTML = ''; }
+function zoomZeigen(inhalt, beschreibung) {
+  const box = $('#zoomBox');
+  const h = Math.min(innerHeight * 0.96, innerWidth * 0.96 / CARD_RATIO), w = h * CARD_RATIO;
+  box.style.width = w + 'px';
+  box.style.height = h + 'px';
+  box.className = 'zoombox' + (beschreibung ? ' desc' : '');
+  box.innerHTML = '';
+  box.appendChild(inhalt);
+  if (beschreibung) {
+    const dt = inhalt;
+    let fs = (parseFloat(dt.style.fontSize) || (G ? G.cw : 200) * 0.062) * w / (G ? G.cw : 200);
+    dt.style.fontSize = fs + 'px';
+    $('#zoom').classList.add('show');
+    while (dt.scrollHeight > dt.clientHeight + 1 && fs > 6) { fs -= 0.5; dt.style.fontSize = fs + 'px'; }
+    return;
+  }
+  $('#zoom').classList.add('show');
+}
+function zoomBild(src) {
+  const f = document.createElement('div');
+  f.style.cssText = 'position:absolute;inset:0';
+  f.innerHTML = `<img src="${src}" alt="" draggable="false">`;
+  return f;
+}
+/* Ermittelt, was unter dem Finger liegt, und zeigt es vergrößert (nur, was sichtbar und lesbar ist) */
+function zoomFuer(ziel) {
+  if (!S || !ziel || !ziel.closest || !$('#screenGame').classList.contains('active')) return false;
+  if (ziel.closest('#trackerBox')) {
+    const f = zoomBild(S.trackerHinten ? $('#refImg').src : $('#trackerImg').src);
+    if (!S.trackerHinten) {
+      const m = $('#marker').cloneNode(true);
+      m.removeAttribute('id');
+      m.classList.remove('hop', 'appear');
+      f.appendChild(m);
+    }
+    zoomZeigen(f, false);
+    return true;
+  }
+  const c = ziel.closest('.card');
+  if (c && c._karte && c.classList.contains('flipped') && !c.classList.contains('dragging')) {
+    if (c.classList.contains('desc')) zoomZeigen(c.querySelector('.dt').cloneNode(true), true);
+    else zoomZeigen(zoomBild(IMG + c._karte.bild + '.webp'), false);
+    return true;
+  }
+  if (ziel.closest('#discardPile') && S.ablage.length) {
+    zoomZeigen(zoomBild(IMG + S.ablage[S.ablage.length - 1].bild + '.webp'), false);
+    return true;
+  }
+  return false;
+}
+function bindeDoppeltippen() {
+  let down = null, letzter = { t: 0, x: 0, y: 0 };
+  document.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY }; }, true);
+  document.addEventListener('pointerup', e => {
+    if (!down) return;
+    const weit = Math.hypot(e.clientX - down.x, e.clientY - down.y) > 14 * (G ? G.u : 1);
+    down = null;
+    if (weit) { letzter.t = 0; return; }
+    const jetzt = Date.now();
+    const doppelt = jetzt - letzter.t < 380 && Math.hypot(e.clientX - letzter.x, e.clientY - letzter.y) < 40 * (G ? G.u : 1);
+    if (!doppelt) { letzter = { t: jetzt, x: e.clientX, y: e.clientY }; return; }
+    letzter.t = 0;
+    if (zoomOffen()) zoomSchliessen();
+    else zoomFuer(e.target);
+  }, true);
+  document.addEventListener('pointercancel', () => { down = null; }, true);
 }
 
 /* ====================== Anleitung und Glossar ====================== */
@@ -901,6 +976,7 @@ window.addEventListener('DOMContentLoaded', () => {
   $('#deckPile').addEventListener('pointerdown', startZiehen);
   bindeTrackerWischen();
   bindeKartenWischen();
+  bindeDoppeltippen();
   bindeBlatt($('#manual'), '#manualX');
   bindeBlatt($('#glossary'), '#glossX');
   sucheAnleitung = richteSucheEin('manual', '#manualBody', baueAnleitung);
@@ -910,6 +986,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('resize', () => {
+  zoomSchliessen();
   setzeMass();
   layoutTrackerwahl();
   if (S && document.getElementById('screenGame').classList.contains('active')) {
@@ -922,6 +999,7 @@ window.addEventListener('resize', () => {
 
 /* Zurück-Taste von Android (siehe MainActivity) */
 window.__androidBack = function () {
+  if (zoomOffen()) { zoomSchliessen(); return; }
   const blatt = offenesBlatt();
   if (blatt) { blattSchliessen(blatt); return; }
   const modal = $('#modal');

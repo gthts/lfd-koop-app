@@ -2,6 +2,7 @@ package de.gthts.lfdcoop;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,9 +51,27 @@ public class MainActivity extends Activity {
         s.setTextZoom(100);
         s.setAllowFileAccess(true);
 
-        web.setWebViewClient(new WebViewClient());
+        web.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView v, String url) {
+                meldeSchrift();
+            }
+        });
         setContentView(web);
         web.loadUrl("file:///android_asset/www/index.html");
+    }
+
+    /** Schriftgröße der Systemeinstellung an die Oberfläche melden; die Oberfläche begrenzt sie selbst. */
+    private void meldeSchrift() {
+        if (web == null) return;
+        float f = getResources().getConfiguration().fontScale;
+        web.evaluateJavascript("window.setzeSchrift && window.setzeSchrift(" + f + ")", null);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration neu) {
+        super.onConfigurationChanged(neu);
+        meldeSchrift();
     }
 
     @Override
