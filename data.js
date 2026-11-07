@@ -1,8 +1,8 @@
 'use strict';
-/* Daten gemäß REGELWERK.md (Fassung 2.28), Abschnitt 6.
+/* Daten gemäß REGELWERK.md (Fassung 2.34), Abschnitt 6.
    Texte der Karten stehen in i18n.js; hier nur Bild, Art und Merkmale. Die Kategorie (für die Kollisionsregel) steht in kategorie(). */
 
-/* [Bilddatei, Art, Merkmale, Anzahl im Stapel] – zusammen 47 Karten
+/* [Bilddatei, Art, Merkmale, Anzahl im Stapel] – zusammen 47 Karten (beim Ewigen Einsiedler ohne Baumfäule und Wurzelwanderung: 34, siehe baueStapel)
    Zwei Karten gleicher Kategorie (siehe kategorie()) dürfen nicht gemeinsam in der Auslage liegen. */
 const STAPEL_DEF = [
   ['baumfaeule_zahl_sommer',  'faeule', { kind: 'zahl',   s: 'S' }, 1],
@@ -29,6 +29,8 @@ const STAPEL_DEF = [
 
   ['verdunkelung_mond', 'dunkel', { m: 'dunkel' }, 3],
   ['erhellung_sonne',   'dunkel', { m: 'erhell' }, 3],
+  ['verdunkelung_doppelt', 'dunkel', { m: 'dunkel', doppelt: true }, 1],
+  ['erhellung_doppelt',    'dunkel', { m: 'erhell', doppelt: true }, 1],
 
   ['funkenflug_1', 'funken', { n: 1 }, 2],
   ['funkenflug_2', 'funken', { n: 2 }, 2],
@@ -39,28 +41,29 @@ const STAPEL_DEF = [
 
   ['entfremdung', 'entfremd', {}, 2],
 
-  ['besessenheit_sommer', 'besessen', { s: 'S' }, 1],
-  ['besessenheit_winter', 'besessen', { s: 'W' }, 1],
+  ['besessenheit_sommer', 'besessen', { s: 'S' }, 2],
+  ['besessenheit_winter', 'besessen', { s: 'W' }, 2],
 
   ['hirschlosung_sommer', 'hirsch', { s: 'S' }, 1],
   ['hirschlosung_winter', 'hirsch', { s: 'W' }, 1],
 
-  ['ruhe', 'ruhe', {}, 4],
-  ['waran_lockruf', 'lockruf', {}, 2]
+  ['ruhe', 'ruhe', {}, 2]
 ];
 
 /* Kategorie einer Karte: Onibi-Marsch und Onibi-Besessenheit bilden gemeinsam eine Kategorie (Regelwerk 2.27). */
 function kategorie(art) { return (art === 'marsch' || art === 'besessen') ? 'onibi' : art; }
 
 /* Rundentracker (Bildmaße 630 × 880). Feldmitten aus dem Bild gemessen.
-   Fassung 2.28: Training, Standard, Hardcore für alle Ziele; Kurzspiel nur fürs Schützende Dickicht. */
+   Fassung 2.34: Training 12 Runden, Standard und Hardcore 9 Runden, Kurzspiel 6 Runden (nur Schützendes Dickicht).
+   fluch = Runde, ab der der Onibi-Fluch gilt (0 = nie). */
 const SPALTEN3 = [126, 250, 375, 500];
 const ZEILEN3 = [231, 450, 669];
+const SPALTEN9 = [165, 315, 465];
 const TRACKER = {
-  '1': { bild: 'rundentracker_1', name: 'training',  ende: 12, zwei: 5,  drei: 9,  partner: 1, spalten: SPALTEN3, zeilen: ZEILEN3 },
-  '2': { bild: 'rundentracker_2', name: 'standard',  ende: 12, zwei: 3,  drei: 7,  partner: 5, spalten: SPALTEN3, zeilen: ZEILEN3 },
-  '3': { bild: 'rundentracker_3', name: 'hardcore',  ende: 12, zwei: 2,  drei: 5,  partner: 6, spalten: SPALTEN3, zeilen: ZEILEN3 },
-  '4': { bild: 'rundentracker_4', name: 'kurzspiel', ende: 6,  zwei: 2,  drei: 4,  partner: 5, spalten: [160, 313, 466], zeilen: [319, 585], einWald: true }
+  '1': { bild: 'rundentracker_1', name: 'training',  ende: 12, zwei: 5,  drei: 9,  partner: 1, fluch: 0, spalten: SPALTEN3, zeilen: ZEILEN3 },
+  '2': { bild: 'rundentracker_2', name: 'standard',  ende: 9,  zwei: 3,  drei: 7,  partner: 5, fluch: 4, spalten: SPALTEN9, zeilen: ZEILEN3 },
+  '3': { bild: 'rundentracker_3', name: 'hardcore',  ende: 9,  zwei: 2,  drei: 5,  partner: 6, fluch: 3, spalten: SPALTEN9, zeilen: ZEILEN3 },
+  '4': { bild: 'rundentracker_4', name: 'kurzspiel', ende: 6,  zwei: 2,  drei: 4,  partner: 5, fluch: 3, spalten: [160, 313, 466], zeilen: [319, 585], einWald: true }
 };
 
 /* Spielziele. Gruppe: empf = Standard, leicht = Training, schwer = Hardcore, kurz = Kurzspiel */
@@ -78,7 +81,7 @@ const ZIELE = [
       { art: 'schwer', items: [{ t: '3' }] },
       { art: 'kurz',   items: [{ t: '4' }] }
     ] },
-  { id: 'unbeugsam', kunst: ['ziel_unbeugsam'], pos: '52%',
+  { id: 'einsiedler', kunst: ['ziel_unbeugsam'], pos: '52%',
     gruppen: [
       { art: 'leicht', items: [{ t: '1' }] },
       { art: 'empf',   items: [{ t: '2' }] },

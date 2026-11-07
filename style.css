@@ -107,8 +107,7 @@ h1{margin:calc(var(--u)*4) 0 0;font-family:Georgia,"Times New Roman",serif;font-
   box-shadow:0 calc(var(--u)*10) calc(var(--u)*26) rgba(0,0,0,.5),inset 0 0 calc(var(--u)*30) rgba(0,0,0,.35)}
 
 .trackerbox{border-radius:calc(var(--u)*20);perspective:calc(var(--u)*1800)}
-.tflip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .85s cubic-bezier(.3,.7,.3,1)}
-.tflip.back{transform:rotateY(180deg)}
+.tflip{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--tw,0deg));transition:transform .85s cubic-bezier(.3,.7,.3,1)}
 .tface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:calc(var(--u)*20);
   filter:drop-shadow(0 calc(var(--u)*10) calc(var(--u)*16) rgba(0,0,0,.65))}
 .tface.rev{transform:rotateY(180deg)}
@@ -187,7 +186,7 @@ h1{margin:calc(var(--u)*4) 0 0;font-family:Georgia,"Times New Roman",serif;font-
 .card{position:absolute;left:0;top:0;width:var(--cw);height:var(--ch);perspective:calc(var(--cw)*5);will-change:transform;z-index:5}
 .card.dragging{z-index:50;filter:drop-shadow(0 calc(var(--u)*18) calc(var(--u)*18) rgba(0,0,0,.55))}
 .card .flip{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.3,.7,.3,1)}
-.card.flipped .flip{transform:rotateY(180deg)}
+.card.flipped .flip{transform:rotateY(var(--w,180deg))}
 .card .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
   filter:drop-shadow(0 calc(var(--u)*5) calc(var(--u)*7) rgba(0,0,0,.6))}
 .card .face.back{background:url(img/rueckseite.webp) center/100% 100% no-repeat}
@@ -198,9 +197,21 @@ h1{margin:calc(var(--u)*4) 0 0;font-family:Georgia,"Times New Roman",serif;font-
 .card.blink .glow{animation:blink .25s ease-in-out 4}
 @keyframes blink{0%,100%{opacity:0}50%{opacity:1}}
 .card.blink .flip{animation:shake .25s ease-in-out 4}
-@keyframes shake{0%,100%{transform:rotateY(180deg)}50%{transform:rotateY(180deg) scale(1.04)}}
+@keyframes shake{0%,100%{transform:rotateY(var(--w,180deg))}50%{transform:rotateY(var(--w,180deg)) scale(1.04)}}
 .shuffle{animation:shuf .22s ease-in-out 3}
 @keyframes shuf{0%,100%{transform:translateX(0) rotate(0)}30%{transform:translateX(calc(var(--u)*-26)) rotate(-4deg)}70%{transform:translateX(calc(var(--u)*26)) rotate(4deg)}}
+
+/* Vergrößerte Karte */
+.zoom{position:fixed;inset:0;z-index:150;display:none;place-items:center;background:rgba(3,10,8,.9);touch-action:manipulation}
+.zoom.show{display:grid}
+.zoombox{position:relative;border-radius:calc(var(--u)*20);filter:drop-shadow(0 calc(var(--u)*14) calc(var(--u)*30) rgba(0,0,0,.8))}
+.zoombox img{width:100%;height:100%;display:block}
+.zoombox.desc{background:url(img/leerkarte.webp) center/100% 100% no-repeat}
+.zoombox.desc .dt{display:block;position:absolute;left:10%;right:10%;top:9%;bottom:12%;overflow:hidden;color:#3a2410;text-align:left;line-height:1.28}
+
+/* Schriftgröße der Systemeinstellung: nur Lesetext (Anleitung, Glossar) und Dialog, begrenzt (siehe setzeSchrift) */
+.sheet-body{--u:var(--us)}
+.dialog{--u:var(--ud)}
 
 /* Dialog */
 .modal{position:fixed;inset:0;z-index:100;display:none;place-items:center;background:rgba(3,10,8,.72);backdrop-filter:blur(3px)}
@@ -289,7 +300,6 @@ h1{margin:calc(var(--u)*4) 0 0;font-family:Georgia,"Times New Roman",serif;font-
 .portrait .sheet-title{font-size:calc(var(--u)*34)}
 
 /* ---------- Rückseite einer Ereigniskarte: Leerkarte mit Beschreibung ---------- */
-.card.desc .flip{transform:rotateY(360deg)}
 .card.dm .face.back{background:url(img/leerkarte.webp) center/100% 100% no-repeat}
 .card .face.back .dt{display:none}
 .card.dm .face.back .dt{display:block;position:absolute;left:10%;right:10%;top:9%;bottom:12%;overflow:hidden;color:#3a2410;text-align:left;
