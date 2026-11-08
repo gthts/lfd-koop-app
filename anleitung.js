@@ -96,7 +96,7 @@ de: {
     ]},
     { h: 'Bäume pflanzen (Spross)', p: [
       'Der Spieler wählt aus den offen ausliegenden Bäumen des Vorrats einen oder mehrere; ihre Kosten dürfen zusammen höchstens so hoch sein wie seine Sprossstärke. Die Bäume müssen aus verschiedenen Vorratsstapeln stammen, also sind höchstens 4 möglich. Zuerst werden alle gewählten Bäume gepflanzt, danach folgen die dabei entstandenen Bonusaktionen.',
-      'Alle Flüsse einer Baumkarte müssen stets an den See des Startbaums angeschlossen sein, entweder unmittelbar oder über weitere Baumkarten. Der Startbaum darf an einer beliebigen Stelle des 3×3-Rasters liegen. Baumkarten dürfen nicht gedreht werden; alle Bäume stehen mit der Krone nach oben. Ein Wald darf höchstens 5 × 5 Felder umfassen.',
+      'Alle Flüsse einer Baumkarte müssen stets an den See des Startbaums angeschlossen sein, entweder unmittelbar oder über weitere Baumkarten. Baumkarten dürfen nicht gedreht werden; alle Bäume stehen mit der Krone nach oben.',
       'Ein Baum, der nicht passend platziert werden kann (kein erlaubter Platz, kein Fluss zur Quelle), geht verloren; das ist ein Fehlkauf, und der Baum kehrt nicht in den Vorratsstapel zurück. Man darf auch Bäume kaufen, für die kein Platz frei ist, etwa um den nächsten Baum des Vorratsstapels freizulegen.',
       'Überdecken: Ein Baum im Wald, in den gepflanzt wird (eigener Wald oder Partnerwald), der nicht der Startbaum ist, darf von einem neuen Baum bedeckt werden, sofern die Pflanzregeln eingehalten bleiben. Ein Platz gilt als belegt, egal wie hoch der Stapel ist. Mehrere übereinanderliegende Bäume bilden einen Baumstapel; nur der oberste ist sichtbar und wirksam. Der bedeckte Baum büßt seine Wirkung ein, dafür kann der neue Baum erneut Bonusaktionen auslösen. Bedeckte Bäume liefern keine Elemente und sind vor Ereigniskarten sicher.',
       'Jeder Baum im Wald, außer dem Startbaum, liefert dauerhaft ein zusätzliches Element, solange er sichtbar bleibt. Die Elementfarben: gelb Licht, rot Spross, türkis Wasser, violett Geist.',
@@ -244,7 +244,7 @@ en: {
     ]},
     { h: 'Plant trees (sprout)', p: [
       'The player takes 1 or more face-up trees of their choice from the supply whose costs together are at most their sprout strength. Several trees must come from different supply piles; so at most 4 trees are possible. All trees taken are planted, and then the bonus actions that arose are carried out.',
-      'Every river on a tree card must be connected to the lake of the starting tree at all times, directly or across several tree cards. The starting tree may sit at any position of the 3×3 grid. Tree cards must not be rotated; all trees stand with the crown up. A forest may span at most 5 × 5 fields.',
+      'Every river on a tree card must be connected to the lake of the starting tree at all times, directly or across several tree cards. Tree cards must not be rotated; all trees stand with the crown up.',
       'A tree that cannot be placed properly (no permitted place, no river to the source) is lost; this is a wasted purchase, and the tree does not return to the supply pile. You may also buy trees for which no place is free, for example to uncover the next tree of the supply pile.',
       'Covering: A tree in the forest being planted into (your own or your partner\'s), except the starting tree, may be covered with a new tree, observing the rules. A place counts as occupied however high the stack is. Several trees lying on top of each other form a tree stack; only the top one is visible and effective. A covered tree loses its effect, but the new tree can trigger bonus actions again. Covered trees provide no elements and are not hit by event cards.',
       'Every tree in the forest except the starting tree permanently provides one additional element as long as it stays visible. Element colours: yellow light, red sprout, turquoise water, violet spirit.',
@@ -392,7 +392,7 @@ ko: {
     ]},
     { h: '나무 심기(새싹)', p: [
       '플레이어는 비축분에서 앞면으로 놓인 나무를 한 그루 이상 고르며, 비용의 합은 자기 새싹의 힘을 넘을 수 없습니다. 나무는 서로 다른 비축 더미에서 골라야 하므로 최대 4그루입니다. 고른 나무를 모두 먼저 심고, 그다음 생긴 보너스 행동을 실행합니다.',
-      '나무 카드의 모든 강줄기는 항상 시작 나무의 호수에 이어져 있어야 하며, 직접 이어지거나 다른 나무 카드를 거쳐 이어져도 됩니다. 시작 나무는 3×3 격자의 어느 자리에 놓아도 됩니다. 나무 카드는 돌릴 수 없으며 모든 나무는 꼭대기가 위를 향합니다. 숲은 최대 5 × 5칸입니다.',
+      '나무 카드의 모든 강줄기는 항상 시작 나무의 호수에 이어져 있어야 하며, 직접 이어지거나 다른 나무 카드를 거쳐 이어져도 됩니다. 나무 카드는 돌릴 수 없으며 모든 나무는 꼭대기가 위를 향합니다.',
       '알맞게 놓을 수 없는 나무(허용된 자리가 없거나 샘으로 가는 강줄기가 없음)는 사라집니다. 이를 잘못된 구입이라 하며 나무는 비축 더미로 돌아가지 않습니다. 다음 나무를 드러내려는 등의 이유로 놓을 자리가 없는 나무를 구입해도 됩니다.',
       '덮기: 나무를 심는 숲(자기 숲 또는 파트너의 숲)의 시작 나무가 아닌 나무는 심기 규칙을 지키는 한 새 나무로 덮을 수 있습니다. 더미가 아무리 높아도 그 자리는 차지한 자리로 칩니다. 겹쳐 놓인 나무 여러 그루는 나무 더미를 이루며, 맨 위의 나무만 보이고 효과가 있습니다. 덮인 나무는 효과를 잃지만 새 나무가 다시 보너스 행동을 일으킬 수 있습니다. 덮인 나무는 요소를 주지 못하며 사건 카드의 영향을 받지 않습니다.',
       '숲의 모든 나무(시작 나무 제외)는 보이는 동안 요소를 하나씩 계속 제공합니다. 요소의 색: 노랑은 빛, 빨강은 새싹, 청록은 물, 보라는 영혼입니다.',
