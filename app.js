@@ -215,7 +215,7 @@ function starteSpiel(ziel, trackerId, ende, gruppe) {
   $('#trackerImg').src = IMG + t.bild + '.webp';
   $('#infoGoal').textContent = tr('goal_' + ziel.id);
   $('#infoTracker').textContent = tr('trackerName', t.id, t.name);
-  $('#infoHint').textContent = tr('infoHint', ende, t.partner) + ' ' + tr('twoThree', t.zwei, t.drei) + '.' + (t.einWald ? ' ' + tr('oneForest') : '') + ' ' + (t.fluch ? tr('curseFrom', t.fluch) : tr('noCurse')) + (ziel.id === 'einsiedler' ? ' ' + tr('dropTrees') : '');
+  $('#infoHint').textContent = tr('infoHint', ende, t.partner) + ' ' + tr('twoThree', t.zwei, t.drei) + '.' + ' ' + (t.fluch ? tr('curseFrom', t.fluch) : tr('noCurse')) + (ziel.id === 'einsiedler' ? ' ' + tr('dropTrees') : '');
   $('#roundOf').textContent = '/ ' + ende;
   $('#lastBanner').classList.remove('show');
   $('#msg').className = 'msg';
