@@ -27,10 +27,10 @@ const STAPEL_DEF = [
   ['marsch_sommer_3', 'marsch', { n: 3, s: 'S' }, 1],
   ['marsch_winter_3', 'marsch', { n: 3, s: 'W' }, 1],
 
-  ['verdunkelung_mond', 'dunkel', { m: 'dunkel' }, 3],
-  ['erhellung_sonne',   'dunkel', { m: 'erhell' }, 3],
-  ['verdunkelung_doppelt', 'dunkel', { m: 'dunkel', doppelt: true }, 1],
-  ['erhellung_doppelt',    'dunkel', { m: 'erhell', doppelt: true }, 1],
+  ['gezeitendrift_winter', 'dunkel', { s: 'W' }, 3],
+  ['gezeitendrift_sommer', 'dunkel', { s: 'S' }, 3],
+  ['gezeitendrift_doppelt_winter', 'dunkel', { s: 'W', doppelt: true }, 1],
+  ['gezeitendrift_doppelt_sommer', 'dunkel', { s: 'S', doppelt: true }, 1],
 
   ['funkenflug_1', 'funken', { n: 1 }, 2],
   ['funkenflug_2', 'funken', { n: 2 }, 2],
@@ -44,8 +44,8 @@ const STAPEL_DEF = [
   ['besessenheit_sommer', 'besessen', { s: 'S' }, 2],
   ['besessenheit_winter', 'besessen', { s: 'W' }, 2],
 
-  ['hirschlosung_sommer', 'hirsch', { s: 'S' }, 1],
-  ['hirschlosung_winter', 'hirsch', { s: 'W' }, 1],
+  ['sehnsucht_sommer', 'hirsch', { s: 'S' }, 1],
+  ['sehnsucht_winter', 'hirsch', { s: 'W' }, 1],
 
   ['ruhe', 'ruhe', {}, 2]
 ];
@@ -54,37 +54,39 @@ const STAPEL_DEF = [
 function kategorie(art) { return (art === 'marsch' || art === 'besessen') ? 'onibi' : art; }
 
 /* Rundentracker (Bildmaße 630 × 880). Feldmitten aus dem Bild gemessen.
-   Fassung 2.34: Training 12 Runden, Standard und Hardcore 9 Runden, Kurzspiel 6 Runden (nur Schützendes Dickicht).
+   Fassung 2.43: drei Schwierigkeitsgrade. Leicht (Karte 1, 9 Runden); Empfohlen und Schwer je als Variante a (6 Runden)
+   und Variante b (9 Runden, gleiche Schwellen). Ewiger Einsiedler spielt Variante b, die übrigen Ziele Variante a.
    fluch = Runde, ab der der Onibi-Fluch gilt (0 = nie). */
-const SPALTEN3 = [126, 250, 375, 500];
-const ZEILEN3 = [231, 450, 669];
-const SPALTEN9 = [165, 315, 465];
+const SPALTEN = [165, 315, 465];
+const ZEILEN9 = [231, 450, 669];
+const ZEILEN6 = [320, 580];
 const TRACKER = {
-  '1': { bild: 'rundentracker_1', name: 'training',  ende: 12, zwei: 5,  drei: 9,  partner: 1, fluch: 0, spalten: SPALTEN3, zeilen: ZEILEN3 },
-  '2': { bild: 'rundentracker_2', name: 'standard',  ende: 9,  zwei: 3,  drei: 7,  partner: 5, fluch: 4, spalten: SPALTEN9, zeilen: ZEILEN3 },
-  '3': { bild: 'rundentracker_3', name: 'hardcore',  ende: 9,  zwei: 2,  drei: 5,  partner: 6, fluch: 3, spalten: SPALTEN9, zeilen: ZEILEN3 },
-  '4': { bild: 'rundentracker_4', name: 'kurzspiel', ende: 6,  zwei: 2,  drei: 4,  partner: 5, fluch: 3, spalten: [160, 313, 466], zeilen: [319, 585], einWald: true }
+  '1':  { bild: 'rundentracker_1',  name: 'leicht',    ende: 9, zwei: 3, drei: 7, partner: 5, fluch: 4, spalten: SPALTEN, zeilen: ZEILEN9 },
+  '2a': { bild: 'rundentracker_2a', name: 'empfohlen', ende: 6, zwei: 2, drei: 5, partner: 6, fluch: 3, spalten: SPALTEN, zeilen: ZEILEN6 },
+  '2b': { bild: 'rundentracker_2b', name: 'empfohlen', ende: 9, zwei: 2, drei: 5, partner: 6, fluch: 3, spalten: SPALTEN, zeilen: ZEILEN9 },
+  '3a': { bild: 'rundentracker_3a', name: 'schwer',    ende: 6, zwei: 2, drei: 4, partner: 5, fluch: 1, spalten: SPALTEN, zeilen: ZEILEN6 },
+  '3b': { bild: 'rundentracker_3b', name: 'schwer',    ende: 9, zwei: 2, drei: 4, partner: 5, fluch: 1, spalten: SPALTEN, zeilen: ZEILEN9 }
 };
 
-/* Spielziele. Gruppe: empf = Standard, leicht = Training, schwer = Hardcore, kurz = Kurzspiel */
+/* Spielziele. Gruppe: leicht, empf (empfohlen), schwer. Die Trackerkarte hängt vom Ziel ab:
+   Ewiger Einsiedler immer Variante b (9 Runden), sonst Variante a (6 Runden); Leicht immer Karte 1 (9 Runden). */
 const ZIELE = [
   { id: 'harmonie', kunst: ['ziel_harmonie'], pos: '19%',
     gruppen: [
       { art: 'leicht', items: [{ t: '1' }] },
-      { art: 'empf',   items: [{ t: '2' }] },
-      { art: 'schwer', items: [{ t: '3' }] }
+      { art: 'empf',   items: [{ t: '2a' }] },
+      { art: 'schwer', items: [{ t: '3a' }] }
     ] },
   { id: 'dickicht', kunst: ['ziel_dickicht'], pos: '28%',
     gruppen: [
       { art: 'leicht', items: [{ t: '1' }] },
-      { art: 'empf',   items: [{ t: '2' }] },
-      { art: 'schwer', items: [{ t: '3' }] },
-      { art: 'kurz',   items: [{ t: '4' }] }
+      { art: 'empf',   items: [{ t: '2a' }] },
+      { art: 'schwer', items: [{ t: '3a' }] }
     ] },
   { id: 'einsiedler', kunst: ['ziel_unbeugsam'], pos: '52%',
     gruppen: [
       { art: 'leicht', items: [{ t: '1' }] },
-      { art: 'empf',   items: [{ t: '2' }] },
-      { art: 'schwer', items: [{ t: '3' }] }
+      { art: 'empf',   items: [{ t: '2b' }] },
+      { art: 'schwer', items: [{ t: '3b' }] }
     ] }
 ];
