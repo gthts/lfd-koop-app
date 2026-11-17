@@ -58,7 +58,7 @@ const L = {
     saison: { S: 'Sommer', W: 'Winter', G: 'Größter Wald' },
     el: { zahl: 'Baumwert', licht: 'Licht', spross: 'Spross', wasser: 'Wasser', geist: 'Geist' },
     name: k => ({
-      dunkel: (k.p.doppelt ? 'Doppelte ' : '') + 'Gezeitendrift'
+      dunkel: 'Gezeitendrift' + (k.p.doppelt ? ' x2' : '')
     }[k.art] || L.de.arten[k.art]),
     sub: k => {
       const d = L.de, p = k.p;
@@ -78,7 +78,7 @@ const L = {
       const d = L.de, p = k.p;
       switch (k.art) {
         case 'marsch': return `Der Onibi läuft ${p.n} ${p.n > 1 ? 'Schritte' : 'Schritt'} zum näheren Rand der Lichtung, nie zur Mitte hin. Steht er genau in der Mitte, läuft er zum ${p.s === 'S' ? 'Sommer-Ende (links)' : 'Winter-Ende (rechts)'}, wie es das Symbol der Karte angibt. Wird er über den Rand hinaus gedrängt, ist die Partie verloren.`;
-        case 'dunkel': { const st = p.s === 'W' ? 'Winter' : 'Sommer', mal = p.doppelt ? 'Bis zu zweimal hintereinander: ' : ''; return `${mal}Das günstigste Tier der Jahreszeit mit weniger Tieren in der Nachschubreihe kommt in den Tierstapel seiner Jahreszeit zurück, das oberste Tier des Stapels der stärkeren Jahreszeit nimmt seinen Platz ein. Bei Gleichstand der Zahlen wird ${st} geschwächt. Haben mehrere Tiere die gleichen Kosten, wählen die Spieler.`; }
+        case 'dunkel': { const st = p.s === 'W' ? 'Winter' : 'Sommer', mal = p.doppelt ? 'Bis zu zweimal hintereinander: ' : ''; return `${mal}Das günstigste Tier der Jahreszeit mit weniger Tieren in der Nachschubreihe kommt in den Tierstapel seiner Jahreszeit unter den Tierstapel (Reihenfolge beliebig), das oberste Tier des Stapels der stärkeren Jahreszeit nimmt seinen Platz ein. Bei Gleichstand der Zahlen wird ${st} geschwächt. Haben mehrere Tiere die gleichen Kosten, wählen die Spieler.`; }
         case 'faeule': return `Der betroffene Spieler (${d.saison[p.s]}) muss einen Baum aus seinem Wald vernichten, ${p.kind === 'zahl' ? 'dessen Baumwert mindestens 2 beträgt' : 'dessen Baumelement ' + d.el[p.kind] + ' ist'}. Der Startbaum ist ausgenommen. Bäume, die dadurch von der Quelle abgetrennt werden, sterben mit ab. Es trifft nur den obersten Baum eines Stapels; darunterliegende Bäume bleiben verschont. Findet sich kein passender Baum, geschieht nichts.`;
         case 'wurzel': return `Der betroffene Spieler (${p.s === 'G' ? 'der mit dem größeren Wald, bei Gleichstand der Sommer' : d.saison[p.s]}) wählt einen beliebigen Baumstapel außer dem Startbaum und muss ihn auf einen anderen freien Platz versetzen, an dem er nach den Pflanzregeln erlaubt ist. Findet der Stapel keinen solchen Platz, vertrocknet er. Danach vertrocknen auch alle Bäume, die ohne Verbindung zur Quelle zurückbleiben, es sei denn, der versetzte Stapel bindet sie wieder an.`;
         case 'funken': return `Es werden ${p.n} zusätzliche Flammen-Plättchen gelegt, abwechselnd auf die beiden Nachbarkarten des Onibi, am Rand mit Umlauf. Begonnen wird auf der Nachbarkarte mit dem höheren Brandwert. Reicht der Vorrat an Plättchen nicht aus, ist die Partie verloren.`;
@@ -145,7 +145,7 @@ const L = {
     saison: { S: 'Summer', W: 'Winter', G: 'Largest forest' },
     el: { zahl: 'Tree value', licht: 'Light', spross: 'Sprout', wasser: 'Water', geist: 'Spirit' },
     name: k => ({
-      dunkel: (k.p.doppelt ? 'Double ' : '') + 'Tidal Drift'
+      dunkel: 'Tidal Drift' + (k.p.doppelt ? ' x2' : '')
     }[k.art] || L.en.arten[k.art]),
     sub: k => {
       const d = L.en, p = k.p;
@@ -165,7 +165,7 @@ const L = {
       const d = L.en, p = k.p;
       switch (k.art) {
         case 'marsch': return `The Onibi walks ${p.n} ${p.n > 1 ? 'steps' : 'step'} toward the nearer edge of the clearing, never toward the middle. If it stands exactly in the middle, it heads for the ${p.s === 'S' ? 'summer end (left)' : 'winter end (right)'}, as shown by the symbol on the card. If it is pushed past the edge, the game is lost.`;
-        case 'dunkel': { const st = p.s === 'W' ? 'Winter' : 'Summer', mal = p.doppelt ? 'Up to twice in a row: ' : ''; return `${mal}The cheapest animal of the season with fewer animals in the supply row goes back into the animal pile of its season, and the top animal of the stronger season’s pile takes its place. If the numbers are equal, ${st} is weakened. If several animals cost the same, the players choose.`; }
+        case 'dunkel': { const st = p.s === 'W' ? 'Winter' : 'Summer', mal = p.doppelt ? 'Up to twice in a row: ' : ''; return `${mal}The cheapest animal of the season with fewer animals in the supply row goes under the animal pile of its season (any order), and the top animal of the stronger season’s pile takes its place. If the numbers are equal, ${st} is weakened. If several animals cost the same, the players choose.`; }
         case 'faeule': return `The affected player (${d.saison[p.s]}) must destroy a tree in their forest ${p.kind === 'zahl' ? 'whose tree value is at least 2' : 'whose tree element is ' + d.el[p.kind]}. The starting tree is exempt. Trees that are cut off from the source die as well. Only the top tree of a stack can be hit; trees lying beneath it are safe. If no suitable tree exists, nothing happens.`;
         case 'wurzel': return `The affected player (${p.s === 'G' ? 'the one with the larger forest, Summer on a tie' : d.saison[p.s]}) chooses any tree stack except the starting tree and must move it to another free place where it is allowed under the planting rules. If the stack finds no such place, it withers. Then all trees left without a connection to the source also wither, unless the moved stack reconnects them.`;
         case 'funken': return `${p.n} additional flame tokens are placed, alternating on the two neighbouring cards of the Onibi, wrapping around at the edge. Start with the neighbour that has the higher burn value. If the supply of tokens runs out, the game is lost.`;
@@ -232,7 +232,7 @@ const L = {
     saison: { S: '여름', W: '겨울', G: '가장 큰 숲' },
     el: { zahl: '나무 값', licht: '빛', spross: '새싹', wasser: '물', geist: '영혼' },
     name: k => ({
-      dunkel: (k.p.doppelt ? '이중 ' : '') + '조수의 흐름'
+      dunkel: '조수의 흐름' + (k.p.doppelt ? ' x2' : '')
     }[k.art] || L.ko.arten[k.art]),
     sub: k => {
       const d = L.ko, p = k.p;
@@ -252,7 +252,7 @@ const L = {
       const d = L.ko, p = k.p;
       switch (k.art) {
         case 'marsch': return `오니비는 빈터의 더 가까운 가장자리 쪽으로 ${p.n}칸 이동하며, 결코 중앙 쪽으로는 가지 않습니다. 정확히 중앙에 서 있으면 카드의 기호대로 ${p.s === 'S' ? '여름 쪽 끝(왼쪽)' : '겨울 쪽 끝(오른쪽)'}으로 향합니다. 가장자리 밖으로 밀려나면 게임에서 패배합니다.`;
-        case 'dunkel': { const st = p.s === 'W' ? '겨울' : '여름', mal = p.doppelt ? '최대 두 번 연속으로: ' : ''; return `${mal}공급 줄에서 동물이 더 적은 계절의 가장 저렴한 동물이 자기 계절의 동물 더미로 돌아가고, 그 자리에는 더 강한 계절 더미의 맨 위 동물이 놓입니다. 수가 같으면 ${st}이(가) 약해집니다. 가격이 같은 동물이 여럿이면 플레이어들이 고릅니다.`; }
+        case 'dunkel': { const st = p.s === 'W' ? '겨울' : '여름', mal = p.doppelt ? '최대 두 번 연속으로: ' : ''; return `${mal}공급 줄에서 동물이 더 적은 계절의 가장 저렴한 동물이 자기 계절의 동물 더미 아래로 들어가고(순서는 자유), 그 자리에는 더 강한 계절 더미의 맨 위 동물이 놓입니다. 수가 같으면 ${st}이(가) 약해집니다. 가격이 같은 동물이 여럿이면 플레이어들이 고릅니다.`; }
         case 'faeule': return `해당 플레이어(${d.saison[p.s]})는 자신의 숲에서 ${p.kind === 'zahl' ? '나무 값이 2 이상인' : '나무 요소가 ' + d.el[p.kind] + '인'} 나무 한 그루를 없애야 합니다. 시작 나무는 제외됩니다. 이로 인해 샘에서 끊어진 나무도 함께 죽습니다. 나무 더미에서는 맨 위 나무만 대상이 되며, 그 아래 나무는 무사합니다. 알맞은 나무가 없으면 아무 일도 일어나지 않습니다.`;
         case 'wurzel': return `해당 플레이어(${p.s === 'G' ? '숲이 더 큰 쪽, 같으면 여름' : d.saison[p.s]})는 시작 나무를 제외한 나무 더미 하나를 골라, 심기 규칙상 허용되는 다른 빈 자리로 옮겨야 합니다. 더미를 놓을 자리가 없으면 그 더미는 시듭니다. 그다음 샘과 연결되지 않은 채 남은 모든 나무도 시듭니다. 다만 옮긴 더미가 다시 이어 주는 나무는 남습니다.`;
         case 'funken': return `불꽃 조각 ${p.n}개를 추가로 놓습니다. 오니비의 양쪽 이웃 카드에 번갈아 놓으며, 가장자리에서는 반대편으로 이어집니다. 화력 값이 더 높은 이웃 카드부터 시작합니다. 조각의 비축분이 모자라면 게임에서 패배합니다.`;
