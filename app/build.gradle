@@ -10,8 +10,8 @@ android {
         applicationId 'de.gthts.lfdcoop'
         minSdk 26
         targetSdk 37
-        versionCode 29
-        versionName '1.9.0'
+        versionCode 30
+        versionName '1.9.1'
     }
 
     // Signierschlüssel für die Release-APK: nicht im Projekt ablegen, sondern über Gradle-Eigenschaften übergeben
