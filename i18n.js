@@ -85,8 +85,8 @@ const L = {
         case 'einsam': return `In dieser Runde zählen ${p.n} zusätzliche Einzelgängersymbole für beide Spieler. Sie können schon vor dem ersten Aufdecken Aktionsmarker kosten.`;
         case 'entfremd': return 'In dieser Runde dürfen gezogene Tierkarten nur dann in die Gemeinsame Tier-Reihe gelegt werden, wenn sie ein Einzelgängersymbol tragen; andere Karten werden abgelegt. Karten, die in den persönlichen Bereich kommen, sind nicht betroffen.';
         case 'besessen': return `Der Onibi und jedes Flammen-Plättchen rücken ein Feld in Richtung ${p.s === 'S' ? 'Sommer (nach links)' : 'Winter (nach rechts)'}. Plättchen, die über den Rand geschoben werden, springen auf die andere Seite der Lichtung. Wird der Onibi über den Rand geschoben, ist die Partie verloren. Der Bonus des Zielfelds wird nicht ausgelöst.`;
-        case 'hirsch': return `Die Spieler wählen aus der Ablage Tiere des ${p.s === 'S' ? 'Sommers' : 'Winters'} (nie den Hirsch), bis ihre Kosten zusammen mindestens 9 betragen, und mischen sie in den Tierstapel des ${p.s === 'S' ? 'Sommers' : 'Winters'}. Reichen alle zusammen nicht dafür, kommen alle zurück.`;
-        case 'ruhe': return 'Diese Karte hat keine Wirkung. Sie sorgt nur für die Schwankung im Ereignisstapel.';
+        case 'hirsch': return `Die Spieler wählen aus der Ablage Tiere des ${p.s === 'S' ? 'Sommers' : 'Winters'} (nie den Hirsch), bis ihre Kosten zusammen mindestens 9 betragen (oder keine mehr dort liegen), und legen sie in beliebiger Reihenfolge unter den Tierstapel des ${p.s === 'S' ? 'Sommers' : 'Winters'}.`;
+        case 'ruhe': return 'Diese Karte hat keine Wirkung.';
         default: return '';
       }
     }
@@ -172,8 +172,8 @@ const L = {
         case 'einsam': return `In this round ${p.n} additional loner symbols count for both players. They can cost action markers even before the first card is revealed.`;
         case 'entfremd': return 'In this round, drawn animal cards may only be placed in the shared animal row if they show a loner symbol; other cards are discarded. Cards that go to the personal area are not affected.';
         case 'besessen': return `The Onibi and every flame token move one space toward ${p.s === 'S' ? 'Summer (to the left)' : 'Winter (to the right)'}. Tokens pushed over the edge jump to the other side of the clearing. If the Onibi is pushed over the edge, the game is lost. The bonus of the target space is not triggered.`;
-        case 'hirsch': return `The players choose animals of ${p.s === 'S' ? 'Summer' : 'Winter'} from the discard pile (never the stag) until their costs add up to at least 9, and shuffle them into the animal pile of ${p.s === 'S' ? 'Summer' : 'Winter'}. If all of them together are not enough, all go back.`;
-        case 'ruhe': return 'This card has no effect. It only provides variation in the event deck.';
+        case 'hirsch': return `The players choose animals of ${p.s === 'S' ? 'Summer' : 'Winter'} from the discard pile (never the stag) until their costs add up to at least 9 (or none are left there), and put them under the animal pile of ${p.s === 'S' ? 'Summer' : 'Winter'} in any order.`;
+        case 'ruhe': return 'This card has no effect.';
         default: return '';
       }
     }
@@ -259,8 +259,8 @@ const L = {
         case 'einsam': return `이번 라운드에는 외톨이 기호 ${p.n}개가 두 플레이어 모두에게 추가로 계산됩니다. 첫 카드를 뒤집기 전에도 행동 마커를 잃을 수 있습니다.`;
         case 'entfremd': return '이번 라운드에는 뽑은 동물 카드에 외톨이 기호가 있을 때만 공용 동물 줄에 놓을 수 있습니다. 그렇지 않은 카드는 버립니다. 개인 구역에 들어가는 카드는 해당되지 않습니다.';
         case 'besessen': return `오니비와 모든 불꽃 조각이 ${p.s === 'S' ? '여름 쪽(왼쪽)' : '겨울 쪽(오른쪽)'}으로 한 칸 이동합니다. 가장자리 밖으로 밀린 조각은 빈터의 반대편으로 넘어갑니다. 오니비가 가장자리 밖으로 밀려나면 게임에서 패배합니다. 도착한 칸의 보너스는 발동하지 않습니다.`;
-        case 'hirsch': return `플레이어들은 버린 더미에서 ${p.s === 'S' ? '여름' : '겨울'} 동물(사슴은 제외)을 비용 합계가 9 이상이 될 때까지 고르고, ${p.s === 'S' ? '여름' : '겨울'} 동물 더미에 섞어 넣습니다. 전부 합쳐도 모자라면 모두 돌아갑니다.`;
-        case 'ruhe': return '이 카드는 아무 효과가 없습니다. 사건 더미에 변화를 주는 역할만 합니다.';
+        case 'hirsch': return `플레이어들은 버린 더미에서 ${p.s === 'S' ? '여름' : '겨울'} 동물(사슴은 제외)을 비용 합계가 9 이상이 될 때까지(또는 더 남지 않을 때까지) 고르고, ${p.s === 'S' ? '여름' : '겨울'} 동물 더미 아래에 순서 상관없이 넣습니다.`;
+        case 'ruhe': return '이 카드는 아무 효과가 없습니다.';
         default: return '';
       }
     }
