@@ -732,6 +732,23 @@ function zoomKarteZeigen(c, hinten, richtung) {
     setTimeout(() => box.classList.remove('wende-r', 'wende-l'), 400);
   }
 }
+/* Vergrößerter Tracker: Vorderseite (mit Marker) oder Rückseite (Übersichtskarte); Wischen dreht ihn um */
+function zoomTrackerZeigen(hinten, richtung) {
+  const f = zoomBild(hinten ? $('#refImg').src : $('#trackerImg').src);
+  if (!hinten) {
+    const m = $('#marker').cloneNode(true);
+    m.removeAttribute('id');
+    m.classList.remove('hop', 'appear');
+    f.appendChild(m);
+  }
+  zoomZeigen(f, false);
+  zoomKarte = { tracker: true, _zoomHinten: hinten };
+  if (richtung) {
+    const box = $('#zoomBox');
+    box.classList.add(richtung > 0 ? 'wende-r' : 'wende-l');
+    setTimeout(() => box.classList.remove('wende-r', 'wende-l'), 400);
+  }
+}
 function bindeZoomWischen() {
   let start = null;
   const z = $('#zoom');
@@ -741,7 +758,7 @@ function bindeZoomWischen() {
     const s = start; start = null;
     if (!zoomKarte) return;
     const dx = e.clientX - s.x, dy = e.clientY - s.y;
-    if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) zoomKarteZeigen(zoomKarte, !zoomKarte._zoomHinten, dx > 0 ? 1 : -1);
+    if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) { const r = dx > 0 ? 1 : -1; if (zoomKarte.tracker) zoomTrackerZeigen(!zoomKarte._zoomHinten, r); else zoomKarteZeigen(zoomKarte, !zoomKarte._zoomHinten, r); }
   });
   z.addEventListener('pointercancel', () => { start = null; });
 }
@@ -749,14 +766,7 @@ function bindeZoomWischen() {
 function zoomFuer(ziel) {
   if (!S || !ziel || !ziel.closest || !$('#screenGame').classList.contains('active')) return false;
   if (ziel.closest('#trackerBox')) {
-    const f = zoomBild(S.trackerHinten ? $('#refImg').src : $('#trackerImg').src);
-    if (!S.trackerHinten) {
-      const m = $('#marker').cloneNode(true);
-      m.removeAttribute('id');
-      m.classList.remove('hop', 'appear');
-      f.appendChild(m);
-    }
-    zoomZeigen(f, false);
+    zoomTrackerZeigen(!!S.trackerHinten, 0);
     return true;
   }
   const c = ziel.closest('.card');
