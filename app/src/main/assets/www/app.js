@@ -693,8 +693,10 @@ function bindeKartenWischen() {
 
 /* ---------- Doppeltippen vergrößert Tracker, Ereigniskarte oder oberste Ablagekarte; erneut Doppeltippen schließt ---------- */
 function zoomOffen() { return $('#zoom').classList.contains('show'); }
-function zoomSchliessen() { $('#zoom').classList.remove('show'); $('#zoomBox').innerHTML = ''; }
+let zoomKarte = null; // Karte, deren vergrößerte Ansicht gerade offen ist (Wischen dreht sie um)
+function zoomSchliessen() { zoomKarte = null; $('#zoom').classList.remove('show'); $('#zoomBox').innerHTML = ''; }
 function zoomZeigen(inhalt, beschreibung) {
+  zoomKarte = null;
   const box = $('#zoomBox');
   const h = Math.min(innerHeight * 0.96, innerWidth * 0.96 / CARD_RATIO), w = h * CARD_RATIO;
   box.style.width = w + 'px';
@@ -718,6 +720,31 @@ function zoomBild(src) {
   f.innerHTML = `<img src="${src}" alt="" draggable="false">`;
   return f;
 }
+/* Vergrößerte Ereigniskarte: Vorder- oder Rückseite (Beschreibung); Wischen nach links oder rechts dreht sie um */
+function zoomKarteZeigen(c, hinten, richtung) {
+  if (hinten) zoomZeigen(c.querySelector('.dt').cloneNode(true), true);
+  else zoomZeigen(zoomBild(IMG + c._karte.bild + '.webp'), false);
+  zoomKarte = c;
+  zoomKarte._zoomHinten = hinten;
+  if (richtung) {
+    const box = $('#zoomBox');
+    box.classList.add(richtung > 0 ? 'wende-r' : 'wende-l');
+    setTimeout(() => box.classList.remove('wende-r', 'wende-l'), 400);
+  }
+}
+function bindeZoomWischen() {
+  let start = null;
+  const z = $('#zoom');
+  z.addEventListener('pointerdown', e => { start = { x: e.clientX, y: e.clientY }; });
+  z.addEventListener('pointerup', e => {
+    if (!start) return;
+    const s = start; start = null;
+    if (!zoomKarte) return;
+    const dx = e.clientX - s.x, dy = e.clientY - s.y;
+    if (Math.abs(dx) > 35 * (G ? G.u : 1) && Math.abs(dx) > Math.abs(dy) * 1.2) zoomKarteZeigen(zoomKarte, !zoomKarte._zoomHinten, dx > 0 ? 1 : -1);
+  });
+  z.addEventListener('pointercancel', () => { start = null; });
+}
 /* Ermittelt, was unter dem Finger liegt, und zeigt es vergrößert (nur, was sichtbar und lesbar ist) */
 function zoomFuer(ziel) {
   if (!S || !ziel || !ziel.closest || !$('#screenGame').classList.contains('active')) return false;
@@ -734,8 +761,7 @@ function zoomFuer(ziel) {
   }
   const c = ziel.closest('.card');
   if (c && c._karte && c.classList.contains('flipped') && !c.classList.contains('dragging')) {
-    if (c.classList.contains('desc')) zoomZeigen(c.querySelector('.dt').cloneNode(true), true);
-    else zoomZeigen(zoomBild(IMG + c._karte.bild + '.webp'), false);
+    zoomKarteZeigen(c, c.classList.contains('desc'), 0);
     return true;
   }
   if (ziel.closest('#discardPile') && S.ablage.length) {
@@ -977,6 +1003,7 @@ window.addEventListener('DOMContentLoaded', () => {
   bindeTrackerWischen();
   bindeKartenWischen();
   bindeDoppeltippen();
+  bindeZoomWischen();
   bindeBlatt($('#manual'), '#manualX');
   bindeBlatt($('#glossary'), '#glossX');
   sucheAnleitung = richteSucheEin('manual', '#manualBody', baueAnleitung);

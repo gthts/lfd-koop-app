@@ -50,7 +50,7 @@ The app replaces that event deck. You keep playing **with the components on the 
 
 ## Status
 
-Version **1.9.1**.
+Version **1.9.2**.
 
 ## License
 
